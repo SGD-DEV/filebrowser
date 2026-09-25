@@ -1,6 +1,6 @@
 body {
   font-family: "Roboto", sans-serif;
-  padding-top: 4em;
+  padding-top: 3.5em;
   background: var(--background);
   color: var(--textSecondary);
 }
@@ -18,6 +18,12 @@ body {
 
 a {
   text-decoration: none;
+  color: var(--orange);
+  transition: 0.1s ease color;
+}
+
+a:hover {
+  color: var(--dark-orange);
 }
 
 img {
@@ -54,7 +60,7 @@ i.spin {
 nav {
   width: 16em;
   position: fixed;
-  top: 4em;
+  top: 3.5em;
   left: 0;
   height: calc(100vh - 4em);
   overflow-y: auto;
@@ -69,7 +75,7 @@ nav .action {
   width: 100%;
   display: block;
   border-radius: 0;
-  font-size: 1.1em;
+  font-size: 1em;
   padding: 0.5em;
   white-space: nowrap;
   overflow: hidden;
@@ -100,7 +106,7 @@ main {
   border-bottom: 1px solid var(--divider);
   position: sticky;
   z-index: 1000;
-  top: 4em;
+  top: 3.5em;
 }
 
 .breadcrumbs span,
@@ -145,7 +151,7 @@ html[dir="rtl"] .breadcrumbs a {
 
 .progress div {
   height: 100%;
-  background-color: #40c4ff;
+  background-color: var(--orange);
   width: 0;
   transition: 0.2s ease width;
 }

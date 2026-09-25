@@ -283,7 +283,17 @@
     "userUpdated": "User updated!",
     "username": "Username",
     "users": "Users",
-    "currentPassword": "Your Current Password"
+    "currentPassword": "Your Current Password",
+    "brandingAssets": "Branding Assets",
+    "brandingAssetsHelp": "Upload custom logo, favicon, and app icons. Files will be saved to the branding directory.",
+    "logo": "Logo",
+    "favicon": "Favicon",
+    "appleTouchIcon": "Apple Touch Icon",
+    "androidIcon192": "Android Icon (192x192)",
+    "androidIcon512": "Android Icon (512x512)",
+    "uploading": "Uploading...",
+    "uploadSuccess": "Upload successful!",
+    "uploadFailed": "Upload failed"
   },
   "sidebar": {
     "diskUsed": "{used} of {total} used",

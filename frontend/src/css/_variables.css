@@ -1,12 +1,12 @@
 :root {
-  --blue: #2196f3;
-  --dark-blue: #1e88e5;
+  --orange: #ff8c42;
+  --dark-orange: #e67a2e;
   --red: #f44336;
   --dark-red: #d32f2f;
   --moon-grey: #f2f2f2;
 
   --icon-red: #da4453;
-  --icon-orange: #f47750;
+  --icon-orange: #ff8c42;
   --icon-yellow: #fdbc4b;
   --icon-green: #2ecc71;
   --icon-blue: #1d99f3;
@@ -23,7 +23,7 @@
   --surfacePrimary: rgb(255, 255, 255);
   --surfaceSecondary: rgb(230, 230, 230);
   --divider: rgba(0, 0, 0, 0.05);
-  --iconPrimary: var(--icon-blue);
+  --iconPrimary: var(--icon-orange);
   --iconSecondary: rgb(255, 255, 255);
   --iconTertiary: rgb(204, 204, 204);
   --textPrimary: rgb(111, 111, 111);
@@ -41,18 +41,18 @@
 
   --action: rgb(255, 255, 255);
 
-  --background: rgb(20, 29, 36);
-  --surfacePrimary: rgb(32, 41, 47);
-  --surfaceSecondary: rgb(58, 65, 71);
-  --textPrimary: rgba(255, 255, 255, 0.6);
-  --textSecondary: rgba(255, 255, 255, 0.87);
-  --divider: rgba(255, 255, 255, 0.12);
+  --background: rgb(13, 13, 13);
+  --surfacePrimary: rgb(23, 23, 23);
+  --surfaceSecondary: rgb(40, 40, 40);
+  --textPrimary: rgba(255, 255, 255, 0.55);
+  --textSecondary: rgba(255, 255, 255, 0.92);
+  --divider: rgba(255, 255, 255, 0.08);
   --iconPrimary: rgb(255, 255, 255);
   --iconSecondary: rgb(255, 255, 255);
-  --iconTertiary: rgb(255, 255, 255);
-  --hover: rgba(255, 255, 255, 0.1);
-  --borderPrimary: rgba(255, 255, 255, 0.05);
+  --iconTertiary: rgb(180, 180, 180);
+  --hover: rgba(255, 255, 255, 0.08);
+  --borderPrimary: rgba(255, 255, 255, 0.08);
   --borderSecondary: rgba(255, 255, 255, 0.15);
-  --dividerPrimary: rgba(30, 30, 30, 0.4);
-  --dividerSecondary: rgba(30, 30, 30, 0.6);
+  --dividerPrimary: rgba(50, 50, 50, 0.4);
+  --dividerSecondary: rgba(50, 50, 50, 0.6);
 }

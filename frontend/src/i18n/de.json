@@ -283,7 +283,17 @@
     "userUpdated": "Benutzer aktualisiert!",
     "username": "Benutzername",
     "users": "Benutzer",
-    "currentPassword": "Dein aktuelles Passwort"
+    "currentPassword": "Dein aktuelles Passwort",
+    "brandingAssets": "Design-Elemente",
+    "brandingAssetsHelp": "Lade eigene Logos, Favicons und App-Icons hoch. Die Dateien werden im Design-Verzeichnis gespeichert.",
+    "logo": "Logo",
+    "favicon": "Favicon",
+    "appleTouchIcon": "Apple Touch Icon",
+    "androidIcon192": "Android Icon (192x192)",
+    "androidIcon512": "Android Icon (512x512)",
+    "uploading": "Wird hochgeladen...",
+    "uploadSuccess": "Upload erfolgreich!",
+    "uploadFailed": "Upload fehlgeschlagen"
   },
   "sidebar": {
     "diskUsed": "{used} von {total} belegt",
