@@ -243,7 +243,17 @@
     "userManagement": "Benutzerverwaltung",
     "userUpdated": "Benutzer aktualisiert!",
     "username": "Nutzername",
-    "users": "Nutzer"
+    "users": "Nutzer",
+    "brandingAssets": "Design-Elemente",
+    "brandingAssetsHelp": "Laden Sie eigene Logos, Favicons und App-Icons hoch. Dateien werden im Design-Verzeichnis gespeichert.",
+    "logo": "Logo",
+    "favicon": "Favicon",
+    "appleTouchIcon": "Apple Touch Icon",
+    "androidIcon192": "Android Icon (192x192)",
+    "androidIcon512": "Android Icon (512x512)",
+    "uploading": "Wird hochgeladen...",
+    "uploadSuccess": "Upload erfolgreich!",
+    "uploadFailed": "Upload fehlgeschlagen"
   },
   "sidebar": {
     "help": "Hilfe",
