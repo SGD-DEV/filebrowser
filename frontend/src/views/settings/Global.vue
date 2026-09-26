@@ -119,6 +119,8 @@
             />
           </p>
 
+          <branding-uploader />
+
           <h3>{{ t("settings.tusUploads") }}</h3>
 
           <p class="small">{{ t("settings.tusUploadsHelp") }}</p>
@@ -246,6 +248,7 @@ import { StatusError } from "@/api/utils";
 import Rules from "@/components/settings/Rules.vue";
 import Themes from "@/components/settings/Themes.vue";
 import UserForm from "@/components/settings/UserForm.vue";
+import BrandingUploader from "@/components/settings/BrandingUploader.vue";
 import { useLayoutStore } from "@/stores/layout";
 import { enableExec } from "@/utils/constants";
 import { getTheme, setTheme } from "@/utils/theme";

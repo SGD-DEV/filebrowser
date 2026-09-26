@@ -25,7 +25,7 @@
 } */
 
 .link {
-  color: var(--blue);
+  color: var(--orange);
 }
 
 #loading {
@@ -152,7 +152,7 @@ main .spinner .bounce2 {
   position: absolute;
   bottom: 0;
   right: 0;
-  background: var(--blue);
+  background: var(--orange);
   color: var(--iconSecondary);
   border-radius: 50%;
   font-size: 0.75em;

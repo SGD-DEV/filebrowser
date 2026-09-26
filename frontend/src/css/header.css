@@ -2,15 +2,15 @@ header {
   z-index: 1000;
   background: var(--surfacePrimary);
   border-bottom: 1px solid var(--divider);
-  box-shadow: 0 0 5px var(--borderPrimary);
+  box-shadow: 0 0 3px var(--borderPrimary);
   position: fixed;
   top: 0;
   left: 0;
-  height: 4em;
+  height: 3.5em;
   width: 100%;
   padding: 0;
   display: flex;
-  padding: 0.5em 0.5em 0.5em 1em;
+  padding: 0.375em 0.5em 0.375em 1em;
   align-items: center;
 }
 
@@ -24,7 +24,7 @@ header title {
   padding: 0 1em;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 header .overlay {
@@ -43,7 +43,7 @@ header img {
 }
 
 header img {
-  height: 2.5em;
+  height: 2.25em;
 }
 
 header .action span {
@@ -99,9 +99,9 @@ header .menu-button {
 
 #search.active #input {
   border-bottom: 1px solid var(--borderPrimary);
-  box-shadow: 0 0 5px var(--borderPrimary);
+  box-shadow: 0 0 3px var(--borderPrimary);
   background: var(--surfacePrimary);
-  height: 4em;
+  height: 3.5em;
 }
 
 #search.active > div {
@@ -162,7 +162,7 @@ html[dir="rtl"] #search #result ul > * {
 
 #search.active #result {
   padding: 0.5em;
-  height: calc(100% - 4em);
+  height: calc(100% - 3.5em);
 }
 
 #search ul {
@@ -232,7 +232,7 @@ html[dir="rtl"] #search #result ul > * {
 
 #search .boxes {
   border: 1px solid var(--borderPrimary);
-  box-shadow: 0 0 5px var(--borderPrimary);
+  box-shadow: 0 0 3px var(--borderPrimary);
   background: var(--surfacePrimary);
   margin: 1em 0;
 }
@@ -258,7 +258,7 @@ html[dir="rtl"] #search .boxes h3 {
 }
 
 #search .boxes > div > div {
-  background: var(--blue);
+  background: var(--orange);
   color: #fff;
   text-align: center;
   width: 10em;
