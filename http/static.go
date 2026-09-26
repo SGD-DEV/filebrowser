@@ -129,11 +129,10 @@ func getStaticHandlers(store *storage.Storage, server *settings.Server, assetsFs
 
 		if d.settings.Branding.Files != "" {
 			if strings.HasPrefix(r.URL.Path, "img/") {
-				fPath := filepath.Join(d.settings.Branding.Files, r.URL.Path)
-				_, err := os.Stat(fPath)
-				if err != nil && !os.IsNotExist(err) {
-					log.Printf("could not load branding file override: %v", err)
-				} else if err == nil {
+				if fPath := brandingOverride(d.settings.Branding.Files, r.URL.Path); fPath != "" {
+					// Uploaded branding files can change at any time, so
+					// revalidate instead of caching them for a day.
+					w.Header().Set("Cache-Control", "no-cache")
 					http.ServeFile(w, r, fPath)
 					return 0, nil
 				}

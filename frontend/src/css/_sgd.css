@@ -1,0 +1,508 @@
+/*
+ * SGD look: compact, calm and close to the Hangar panel.
+ * Loaded last so it only overrides; the upstream files stay untouched, which
+ * keeps rebasing onto new File Browser releases cheap.
+ */
+
+:root {
+  --orange: #ff8c42;
+  --dark-orange: #ff9f5f;
+  --accent: var(--orange);
+  --accent-hover: var(--dark-orange);
+  --on-accent: #0f1010;
+  /* Upstream components still refer to these; they must follow the accent. */
+  --blue: var(--accent);
+  --dark-blue: var(--accent-hover);
+  --icon-blue: var(--accent);
+
+  --radius: 8px;
+  --radius-lg: 12px;
+  --font-ui: "Geist", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --background: #f6f6f5;
+  --surfacePrimary: #ffffff;
+  --surfaceSecondary: #efefed;
+  --borderPrimary: #e4e4e1;
+  --borderSecondary: #cfcfcb;
+  --textPrimary: #6b7068;
+  --textSecondary: #1a1c1a;
+  --hover: rgba(0, 0, 0, 0.04);
+  --divider: #e4e4e1;
+  --iconPrimary: var(--accent);
+  --iconTertiary: #9a9d96;
+  --item-selected: #0f1010;
+}
+
+:root.dark {
+  --background: #0f1010;
+  --surfacePrimary: #1a1c1a;
+  --surfaceSecondary: #222420;
+  --borderPrimary: #252720;
+  --borderSecondary: #34372f;
+  --textPrimary: #8a8f86;
+  --textSecondary: #e8e8e6;
+  --hover: rgba(255, 255, 255, 0.04);
+  --divider: #252720;
+  --dividerPrimary: #252720;
+  --dividerSecondary: #34372f;
+  --iconPrimary: #e8e8e6;
+  --iconSecondary: #e8e8e6;
+  --iconTertiary: #6b7068;
+  --action: #c9cbc6;
+  --item-selected: #0f1010;
+}
+
+/* ---------- Base ---------- */
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  accent-color: var(--accent);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+  border-radius: var(--radius);
+  padding: 0.45em 0.95em;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 1px solid transparent;
+  box-shadow: none;
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    color 0.12s ease;
+}
+
+.button:hover {
+  background: var(--accent-hover);
+}
+
+.button--red {
+  background: rgba(248, 113, 113, 0.1);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.25);
+}
+
+.button--red:hover {
+  background: rgba(248, 113, 113, 0.2);
+}
+
+.button--flat,
+.button--flat.button--grey {
+  background: transparent;
+  color: var(--textPrimary);
+  border: 1px solid var(--borderPrimary);
+  text-transform: none;
+  font-size: 12px;
+}
+
+.button--flat:hover {
+  background: var(--hover);
+  color: var(--textSecondary);
+  border-color: var(--borderSecondary);
+}
+
+.button--flat.button--red {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.25);
+}
+
+.button--flat.button--blue,
+.button--flat.button--orange {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.button--block {
+  padding: 0.6em 0.95em;
+}
+
+/* ---------- Inputs ---------- */
+
+.input,
+select.input,
+.card input[type="text"],
+.card input[type="password"],
+.card input[type="number"],
+.card select {
+  background: var(--background);
+  color: var(--textSecondary);
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius);
+  padding: 0.5em 0.75em;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+.input:hover {
+  border-color: var(--borderSecondary);
+}
+
+.input:focus,
+.card input:focus,
+.card select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--accent);
+  width: 14px;
+  height: 14px;
+  vertical-align: -2px;
+  cursor: pointer;
+}
+
+/* ---------- Header ---------- */
+
+header {
+  background: var(--surfacePrimary);
+  border-bottom: 1px solid var(--borderPrimary);
+  box-shadow: none;
+}
+
+.action {
+  border-radius: var(--radius);
+  padding: 0.45em;
+  color: var(--textPrimary);
+}
+
+.action:hover {
+  background: var(--hover);
+  color: var(--textSecondary);
+}
+
+.action i {
+  font-size: 1.35em;
+}
+
+header .action i {
+  color: var(--textPrimary);
+}
+
+header .action:hover i {
+  color: var(--textSecondary);
+}
+
+#search #input {
+  border-radius: var(--radius);
+  background: var(--background);
+  border: 1px solid var(--borderPrimary);
+}
+
+/* ---------- Sidebar ---------- */
+
+nav .action {
+  border-radius: var(--radius);
+  padding: 0.5em 0.75em;
+  margin-bottom: 2px;
+  font-size: 13px;
+  color: var(--textPrimary);
+}
+
+nav .action:hover {
+  background: var(--hover);
+  color: var(--textSecondary);
+}
+
+nav .action i {
+  font-size: 18px;
+  margin-right: 0.35em;
+  color: inherit;
+}
+
+nav > div {
+  border-top: 1px solid var(--borderPrimary);
+}
+
+.credits {
+  font-size: 11px;
+  color: var(--iconTertiary);
+}
+
+/* ---------- Cards and dialogs ---------- */
+
+.card {
+  background: var(--surfacePrimary);
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+.card .card-title {
+  padding: 1em 1.25em 0.5em;
+}
+
+.card .card-title h2 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card .card-content {
+  padding: 0.5em 1.25em 1em;
+}
+
+.card .card-action {
+  padding: 0.75em 1.25em;
+  border-top: 1px solid var(--borderPrimary);
+}
+
+.card .card-action .button + .button {
+  margin-left: 0.4em;
+}
+
+.card.floating {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.dashboard p label,
+.card-content p label {
+  font-size: 12px;
+  color: var(--textPrimary);
+}
+
+/* Tables in settings (users, shares, rules). */
+.card table {
+  font-size: 12px;
+}
+
+.card table th {
+  color: var(--textPrimary);
+  font-weight: 500;
+  text-transform: none;
+}
+
+.card table tr {
+  border-bottom: 1px solid var(--borderPrimary);
+}
+
+/* ---------- Settings ---------- */
+
+.dashboard #nav .wrapper {
+  border-bottom: 1px solid var(--borderPrimary);
+}
+
+.dashboard #nav ul li {
+  padding: 0.9em 1.25em;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--textPrimary);
+  border-bottom-width: 2px;
+}
+
+.dashboard #nav ul li:hover {
+  background: transparent;
+  color: var(--textSecondary);
+}
+
+.dashboard #nav ul li.active {
+  border-color: var(--accent);
+  background: transparent;
+  color: var(--textSecondary);
+}
+
+.dashboard #nav ul li a {
+  color: inherit;
+}
+
+.card-content p,
+.card-content label {
+  font-size: 13px;
+}
+
+.card-content p.small,
+.card-content .small {
+  font-size: 12px;
+  color: var(--textPrimary);
+  line-height: 1.5;
+}
+
+.card-content h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--textPrimary);
+  margin: 1.5em 0 0.5em;
+}
+
+/* ---------- File listing ---------- */
+
+#listing .item {
+  border-radius: var(--radius);
+  border-color: var(--borderPrimary);
+  box-shadow: none;
+}
+
+#listing.list .item {
+  padding: 0.55em 0.9em;
+  border-radius: 0;
+}
+
+#listing.list .item div:first-of-type i {
+  font-size: 1.6em;
+}
+
+#listing.list .item.header {
+  padding: 0.6em 0.9em;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--textPrimary);
+}
+
+/* Tiles: several per row instead of three huge ones. */
+#listing.mosaic {
+  margin: 0 -0.3em;
+}
+
+#listing.mosaic .item {
+  width: calc(25% - 0.6em);
+  margin: 0.3em;
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius);
+  box-shadow: none !important;
+  align-items: center;
+}
+
+#listing.mosaic .item:hover {
+  border-color: var(--borderSecondary);
+  background: var(--surfaceSecondary);
+}
+
+#listing.mosaic .item div:first-of-type {
+  width: 2.75em;
+}
+
+#listing.mosaic .item i {
+  font-size: 2em;
+}
+
+#listing.mosaic .item img {
+  width: 2em;
+  height: 2em;
+  border-radius: 4px;
+}
+
+#listing.mosaic .item .name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--textSecondary);
+}
+
+#listing.mosaic.gallery .item {
+  padding: 0.4em;
+}
+
+#listing.mosaic.gallery .item div:first-of-type {
+  width: 100%;
+  height: 7.5em;
+}
+
+#listing.mosaic.gallery .item i {
+  font-size: 4.5em;
+}
+
+#listing.mosaic.gallery .item img {
+  width: 100%;
+  height: 100%;
+}
+
+#listing.mosaic.gallery .item div:last-of-type {
+  bottom: 0.2em;
+  padding: 0.5em;
+  width: calc(100% - 0.8em);
+}
+
+@media (min-width: 1400px) {
+  #listing.mosaic .item {
+    width: calc(20% - 0.6em);
+  }
+}
+
+@media (max-width: 736px) {
+  #listing.mosaic .item {
+    width: calc(50% - 0.6em);
+  }
+}
+
+#listing .item[aria-selected="true"] {
+  background: var(--accent) !important;
+  color: var(--on-accent) !important;
+}
+
+#listing h2 {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--textPrimary);
+}
+
+/* ---------- Login ---------- */
+
+#login form {
+  background: var(--surfacePrimary);
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-lg);
+  padding: 2em 1.75em;
+  box-shadow: none;
+}
+
+#login h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#login img {
+  max-height: 4em;
+  width: auto;
+}
+
+/* ---------- Misc ---------- */
+
+.link,
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+.Vue-Toastification__toast {
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.Vue-Toastification__toast--success {
+  background: #1a1c1a;
+  border: 1px solid #4ade80;
+  color: #e8e8e6;
+}
+
+.Vue-Toastification__toast--error {
+  background: #1a1c1a;
+  border: 1px solid #f87171;
+  color: #e8e8e6;
+}

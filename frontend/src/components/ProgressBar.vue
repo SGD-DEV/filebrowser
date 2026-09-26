@@ -66,11 +66,11 @@ export default {
     },
     "bg-color": {
       type: String,
-      default: "#eee",
+      default: "var(--borderPrimary)",
     },
     "bar-color": {
       type: String,
-      default: "#2196f3", // match .blue color to Material Design's 'Blue 500' color
+      default: "var(--accent)",
     },
     "bar-transition": {
       type: String,
