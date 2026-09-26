@@ -19,6 +19,9 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import duration from "dayjs/plugin/duration";
 
 import "./css/styles.css";
+import { applyBrandingVersion } from "@/utils/branding";
+
+applyBrandingVersion();
 
 // register dayjs plugins globally
 dayjs.extend(localizedFormat);

@@ -293,7 +293,10 @@
     "androidIcon512": "Android Icon (512x512)",
     "uploading": "Wird hochgeladen...",
     "uploadSuccess": "Upload erfolgreich!",
-    "uploadFailed": "Upload fehlgeschlagen"
+    "uploadFailed": "Upload fehlgeschlagen",
+    "brandingCustom": "Eigene Datei",
+    "brandingDefault": "Standard",
+    "brandingNotConfigured": "Trage zuerst oben einen Branding-Verzeichnispfad ein und speichere, sonst ist kein Upload möglich."
   },
   "sidebar": {
     "diskUsed": "{used} von {total} belegt",

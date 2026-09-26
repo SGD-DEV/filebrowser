@@ -7,7 +7,7 @@ const recaptcha: string = window.FileBrowser.ReCaptcha;
 const recaptchaKey: string = window.FileBrowser.ReCaptchaKey;
 const signup: boolean = window.FileBrowser.Signup;
 const version: string = window.FileBrowser.Version;
-const logoURL = `${staticURL}/img/logo.svg`;
+const logoURL = `${staticURL}/img/logo.svg?v=${window.FileBrowser.BrandingVersion || "0"}`;
 const noAuth: boolean = window.FileBrowser.NoAuth;
 const authMethod = window.FileBrowser.AuthMethod;
 const logoutPage: string = window.FileBrowser.LogoutPage;
@@ -27,6 +27,7 @@ export {
   disableUsedPercentage,
   baseURL,
   logoURL,
+  staticURL,
   recaptcha,
   recaptchaKey,
   signup,

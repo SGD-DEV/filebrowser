@@ -2,120 +2,55 @@
   <div class="sgd-branding-uploader">
     <h3>{{ $t("settings.brandingAssets") }}</h3>
     <p class="small">{{ $t("settings.brandingAssetsHelp") }}</p>
+    <p v-if="loaded && !configured" class="small sgd-warning">
+      {{ $t("settings.brandingNotConfigured") }}
+    </p>
 
     <div class="sgd-branding-grid">
-      <div class="sgd-branding-item">
-        <label>{{ $t("settings.logo") }}</label>
-        <div class="sgd-upload-area">
-          <input
-            type="file"
-            :id="'upload-logo'"
-            accept=".svg,.png,.jpg,.jpeg"
-            @change="handleFileUpload('logo', $event)"
-            style="display: none"
+      <div v-for="item in items" :key="item.type" class="sgd-branding-item">
+        <div class="sgd-preview">
+          <img
+            :src="previewURL(item.path)"
+            :alt="$t(item.label)"
+            @error="hideImage"
+            @load="showImage"
           />
-          <button
-            type="button"
-            class="button button--flat"
-            @click="triggerFileInput('logo')"
-          >
-            {{ $t("buttons.upload") }}
-          </button>
-          <span v-if="uploadStatus.logo" class="sgd-status">{{
-            uploadStatus.logo
-          }}</span>
         </div>
-      </div>
-
-      <div class="sgd-branding-item">
-        <label>{{ $t("settings.favicon") }}</label>
-        <div class="sgd-upload-area">
-          <input
-            type="file"
-            :id="'upload-favicon'"
-            accept=".ico,.svg,.png"
-            @change="handleFileUpload('favicon', $event)"
-            style="display: none"
-          />
-          <button
-            type="button"
-            class="button button--flat"
-            @click="triggerFileInput('favicon')"
-          >
-            {{ $t("buttons.upload") }}
-          </button>
-          <span v-if="uploadStatus.favicon" class="sgd-status">{{
-            uploadStatus.favicon
-          }}</span>
-        </div>
-      </div>
-
-      <div class="sgd-branding-item">
-        <label>{{ $t("settings.appleTouchIcon") }}</label>
-        <div class="sgd-upload-area">
-          <input
-            type="file"
-            :id="'upload-apple-touch-icon'"
-            accept=".png"
-            @change="handleFileUpload('apple-touch-icon', $event)"
-            style="display: none"
-          />
-          <button
-            type="button"
-            class="button button--flat"
-            @click="triggerFileInput('apple-touch-icon')"
-          >
-            {{ $t("buttons.upload") }}
-          </button>
-          <span v-if="uploadStatus['apple-touch-icon']" class="sgd-status">{{
-            uploadStatus["apple-touch-icon"]
-          }}</span>
-        </div>
-      </div>
-
-      <div class="sgd-branding-item">
-        <label>{{ $t("settings.androidIcon192") }}</label>
-        <div class="sgd-upload-area">
-          <input
-            type="file"
-            :id="'upload-android-chrome-192'"
-            accept=".png"
-            @change="handleFileUpload('android-chrome-192', $event)"
-            style="display: none"
-          />
-          <button
-            type="button"
-            class="button button--flat"
-            @click="triggerFileInput('android-chrome-192')"
-          >
-            {{ $t("buttons.upload") }}
-          </button>
-          <span v-if="uploadStatus['android-chrome-192']" class="sgd-status">{{
-            uploadStatus["android-chrome-192"]
-          }}</span>
-        </div>
-      </div>
-
-      <div class="sgd-branding-item">
-        <label>{{ $t("settings.androidIcon512") }}</label>
-        <div class="sgd-upload-area">
-          <input
-            type="file"
-            :id="'upload-android-chrome-512'"
-            accept=".png"
-            @change="handleFileUpload('android-chrome-512', $event)"
-            style="display: none"
-          />
-          <button
-            type="button"
-            class="button button--flat"
-            @click="triggerFileInput('android-chrome-512')"
-          >
-            {{ $t("buttons.upload") }}
-          </button>
-          <span v-if="uploadStatus['android-chrome-512']" class="sgd-status">{{
-            uploadStatus["android-chrome-512"]
-          }}</span>
+        <div class="sgd-branding-info">
+          <span class="sgd-branding-label">{{ $t(item.label) }}</span>
+          <span class="sgd-status">
+            {{
+              status[item.type] ||
+              (custom[item.type]
+                ? $t("settings.brandingCustom")
+                : $t("settings.brandingDefault"))
+            }}
+          </span>
+          <div class="sgd-upload-actions">
+            <input
+              type="file"
+              :id="'upload-' + item.type"
+              :accept="item.accept"
+              @change="handleFileUpload(item.type, $event)"
+              style="display: none"
+            />
+            <button
+              type="button"
+              class="button button--flat"
+              :disabled="!configured"
+              @click="triggerFileInput(item.type)"
+            >
+              {{ $t("buttons.upload") }}
+            </button>
+            <button
+              v-if="custom[item.type]"
+              type="button"
+              class="button button--flat button--red"
+              @click="removeFile(item.type)"
+            >
+              {{ $t("buttons.delete") }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -123,54 +58,132 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from "vue";
+import { inject, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { fetchURL } from "@/api/utils";
+import { fetchJSON, fetchURL } from "@/api/utils";
+import { staticURL } from "@/utils/constants";
+import { applyBrandingVersion, withBrandingVersion } from "@/utils/branding";
+
+type BrandingStatus = {
+  custom: Record<string, boolean>;
+  version: string;
+  configured: boolean;
+};
+
+const items = [
+  {
+    type: "logo",
+    label: "settings.logo",
+    path: "img/logo.svg",
+    accept: ".svg,.png,.jpg,.jpeg",
+  },
+  {
+    type: "favicon",
+    label: "settings.favicon",
+    path: "img/icons/favicon.svg",
+    accept: ".svg,.ico,.png",
+  },
+  {
+    type: "apple-touch-icon",
+    label: "settings.appleTouchIcon",
+    path: "img/icons/apple-touch-icon.png",
+    accept: ".png",
+  },
+  {
+    type: "android-chrome-192",
+    label: "settings.androidIcon192",
+    path: "img/icons/android-chrome-192x192.png",
+    accept: ".png",
+  },
+  {
+    type: "android-chrome-512",
+    label: "settings.androidIcon512",
+    path: "img/icons/android-chrome-512x512.png",
+    accept: ".png",
+  },
+];
 
 const { t } = useI18n();
 const $showError = inject<IToastError>("$showError")!;
 const $showSuccess = inject<IToastSuccess>("$showSuccess")!;
 
-const uploadStatus = ref<Record<string, string>>({});
+const status = ref<Record<string, string>>({});
+const custom = ref<Record<string, boolean>>({});
+const version = ref(window.FileBrowser.BrandingVersion || "0");
+const configured = ref(true);
+const loaded = ref(false);
 
-const triggerFileInput = (fileType: string) => {
-  const input = document.getElementById("upload-" + fileType) as HTMLInputElement;
-  if (input) {
-    input.click();
+const previewURL = (path: string) =>
+  withBrandingVersion(`${staticURL}/${path}`, version.value);
+
+const hideImage = (event: Event) => {
+  (event.target as HTMLImageElement).style.visibility = "hidden";
+};
+
+const showImage = (event: Event) => {
+  (event.target as HTMLImageElement).style.visibility = "";
+};
+
+// Asks the server what is uploaded; a changed version also refreshes the
+// logo and favicon already on the page.
+const refresh = async () => {
+  const data = await fetchJSON<BrandingStatus>("/api/branding");
+  custom.value = data.custom;
+  configured.value = data.configured;
+  loaded.value = true;
+  if (data.version !== version.value) {
+    version.value = data.version;
+    applyBrandingVersion(data.version);
   }
 };
 
-const handleFileUpload = async (fileType: string, event: Event) => {
-  const target = event.target as HTMLInputElement;
-  const files = target.files;
-  if (!files || files.length === 0) return;
+onMounted(() => {
+  refresh().catch($showError);
+});
 
-  const file = files[0];
+const flash = (type: string, message: string) => {
+  status.value[type] = message;
+  setTimeout(() => {
+    status.value[type] = "";
+  }, 3000);
+};
+
+const triggerFileInput = (type: string) => {
+  (
+    document.getElementById("upload-" + type) as HTMLInputElement | null
+  )?.click();
+};
+
+const handleFileUpload = async (type: string, event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+  if (!file) return;
+
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("fileType", fileType);
+  formData.append("fileType", type);
 
-  uploadStatus.value[fileType] = t("settings.uploading");
-
+  status.value[type] = t("settings.uploading");
   try {
-    await fetchURL("/api/branding/upload", {
-      method: "POST",
-      body: formData,
-    });
-    uploadStatus.value[fileType] = t("settings.uploadSuccess");
+    await fetchURL("/api/branding/upload", { method: "POST", body: formData });
+    await refresh();
+    flash(type, t("settings.uploadSuccess"));
     $showSuccess(t("settings.uploadSuccess"));
-    setTimeout(() => {
-      uploadStatus.value[fileType] = "";
-    }, 3000);
   } catch (e: any) {
-    uploadStatus.value[fileType] = t("settings.uploadFailed");
+    flash(type, t("settings.uploadFailed"));
     $showError(e);
-    setTimeout(() => {
-      uploadStatus.value[fileType] = "";
-    }, 3000);
   }
 
   target.value = "";
+};
+
+const removeFile = async (type: string) => {
+  try {
+    await fetchURL(`/api/branding/${type}`, { method: "DELETE" });
+    await refresh();
+  } catch (e: any) {
+    $showError(e);
+  }
 };
 </script>
 
@@ -181,30 +194,66 @@ const handleFileUpload = async (fileType: string, event: Event) => {
 
 .sgd-branding-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1em;
-  margin-top: 1em;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.6em;
+  margin-top: 0.75em;
 }
 
 .sgd-branding-item {
   display: flex;
-  flex-direction: column;
-  gap: 0.5em;
+  align-items: center;
+  gap: 0.75em;
+  padding: 0.6em;
+  border: 1px solid var(--borderPrimary);
+  border-radius: 8px;
 }
 
-.sgd-branding-item label {
-  font-weight: 500;
-  font-size: 0.9em;
-}
-
-.sgd-upload-area {
+.sgd-preview {
+  flex: 0 0 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: var(--background);
+  border: 1px solid var(--borderPrimary);
   display: flex;
   align-items: center;
-  gap: 0.5em;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sgd-preview img {
+  max-width: 36px;
+  max-height: 36px;
+}
+
+.sgd-branding-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  min-width: 0;
+}
+
+.sgd-branding-label {
+  font-weight: 500;
+  font-size: 13px;
 }
 
 .sgd-status {
-  font-size: 0.85em;
+  font-size: 11px;
   color: var(--textPrimary);
+}
+
+.sgd-upload-actions {
+  display: flex;
+  gap: 0.35em;
+  margin-top: 0.2em;
+}
+
+.sgd-upload-actions .button {
+  padding: 0.25em 0.6em;
+  font-size: 11px;
+}
+
+.sgd-warning {
+  color: #fbbf24 !important;
 }
 </style>

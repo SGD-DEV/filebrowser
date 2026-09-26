@@ -81,7 +81,9 @@ func NewHandler(
 
 	api.Handle("/settings", monkey(settingsGetHandler, "")).Methods("GET")
 	api.Handle("/settings", monkey(settingsPutHandler, "")).Methods("PUT")
+	api.Handle("/branding", monkey(brandingGetHandler, "")).Methods("GET")
 	api.Handle("/branding/upload", monkey(brandingUploadHandler, "")).Methods("POST")
+	api.Handle("/branding/{type}", monkey(brandingDeleteHandler, "")).Methods("DELETE")
 
 	api.PathPrefix("/raw").Handler(monkey(rawHandler, "/api/raw")).Methods("GET")
 	api.PathPrefix("/preview/{size}/{path:.*}").
