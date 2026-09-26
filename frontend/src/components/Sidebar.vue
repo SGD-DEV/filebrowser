@@ -97,14 +97,7 @@
 
     <p class="credits">
       <span>
-        <span v-if="disableExternal">File Browser</span>
-        <a
-          v-else
-          rel="noopener noreferrer"
-          target="_blank"
-          href="https://github.com/filebrowser/filebrowser"
-          >File Browser</a
-        >
+        <span>{{ appName }}</span>
         <span> {{ " " }} {{ version }}</span>
       </span>
       <span>
@@ -124,6 +117,7 @@ import { useLayoutStore } from "@/stores/layout";
 import * as auth from "@/utils/auth";
 import {
   version,
+  name,
   signup,
   hideLoginButton,
   disableExternal,
@@ -158,6 +152,7 @@ export default {
     signup: () => signup,
     hideLoginButton: () => hideLoginButton,
     version: () => version,
+    appName: () => name || "File Browser",
     disableExternal: () => disableExternal,
     disableUsedPercentage: () => disableUsedPercentage,
     canLogout: () => !noAuth && (loginPage || logoutPage !== "/login"),

@@ -67,12 +67,6 @@
             class="small"
             scope="global"
           >
-            <a
-              class="link"
-              target="_blank"
-              href="https://github.com/filebrowser/filebrowser/blob/master/docs/customization.md#custom-branding"
-              >{{ t("settings.documentation") }}</a
-            >
           </i18n-t>
 
           <p>
@@ -208,12 +202,6 @@
           >
             <code>FILE</code>
             <code>SCOPE</code>
-            <a
-              class="link"
-              target="_blank"
-              href="https://github.com/filebrowser/filebrowser/blob/master/docs/command-execution.md#hook-runner"
-              >{{ t("settings.documentation") }}</a
-            >
           </i18n-t>
 
           <div
